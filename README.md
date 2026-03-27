@@ -1,16 +1,61 @@
-## Hi there 👋
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Matrix Effect</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
 
-<!--
-**dremersoncruz/dremersoncruz** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<canvas id="matrix"></canvas>
 
-Here are some ideas to get you started:
+<script>
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "アァカサタナハマヤャラワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+
+for (let i = 0; i < columns; i++) {
+  drops[i] = 1;
+}
+
+function draw() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#0F0";
+  ctx.font = fontSize + "px monospace";
+
+  for (let i = 0; i < drops.length; i++) {
+    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  }
+}
+
+setInterval(draw, 33);
+</script>
+
+</body>
+</html>
